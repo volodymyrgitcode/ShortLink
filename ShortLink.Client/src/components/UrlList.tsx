@@ -36,7 +36,7 @@ export const UrlList: React.FC<UrlListProps> = ({ urls, onDelete, onCopy, getFul
                     <TableBody>
                         {urls.map((url) => (
                             <TableRow key={url.id}>
-                                <TableCell className="font-medium">{url.originalUrl}</TableCell>
+                                <TableCell className="font-medium truncate max-w-xs">{url.originalUrl}</TableCell>
                                 <TableCell>{getFullShortUrl(url.shortUrlCode)}</TableCell>
                                 <TableCell>
 

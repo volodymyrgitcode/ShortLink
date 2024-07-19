@@ -4,9 +4,11 @@ import { useUrlShortener } from '@/hooks/useUrlShortener';
 import { API_BASE_URL } from '@/config/config';
 import { UrlShortenerForm } from '@/components/UrlShortenerForm';
 import { UrlList } from '@/components/UrlList';
+import { useToast } from '@/components/ui/use-toast';
 
 const Home: React.FC = () => {
-    const { urls, error, shortenUrl, deleteUrl, fetchUrls } = useUrlShortener();
+    const { urls, error, isLoading, shortenUrl, deleteUrl, fetchUrls } = useUrlShortener();
+    const { toast } = useToast();
 
     useEffect(() => {
         fetchUrls();
@@ -14,7 +16,10 @@ const Home: React.FC = () => {
 
     const copyToClipboard = (shortUrl: string) => {
         navigator.clipboard.writeText(shortUrl);
-        // Show a toast notification here
+        toast({
+            title: 'Copied to clipboard.',
+            description: `${shortUrl}`,
+        });
     };
 
     const getFullShortUrl = (shortUrlCode: string) => {
@@ -29,6 +34,13 @@ const Home: React.FC = () => {
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
+
+            {isLoading && (
+                <>
+                    LOADING...
+                </>
+            )}
+
             {urls.length > 0 && (
                 <UrlList
                     urls={urls}

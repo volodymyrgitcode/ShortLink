@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 
 type UrlFormValues = z.infer<typeof UrlValidationSchema>;
@@ -15,12 +17,19 @@ interface UrlShortenerFormProps {
 }
 
 export const UrlShortenerForm: React.FC<UrlShortenerFormProps> = ({ onSubmit }) => {
+
+    const { authUser } = useAuth();
+    const navigate = useNavigate();
+
     const form = useForm<UrlFormValues>({
         resolver: zodResolver(UrlValidationSchema),
         defaultValues: { url: '' },
     });
 
     const handleSubmit = async (values: UrlFormValues) => {
+        if (!authUser) {
+            navigate('/login');
+        }
         await onSubmit(values.url);
         form.reset();
     };
