@@ -6,15 +6,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from 
 import { Input } from "@/components/ui/input"
 import { LoginValidationSchema } from "@/lib/validation"
 import { Link, useNavigate } from "react-router-dom"
-import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/hooks/useAuth"
+import { useEffect } from "react"
 
 
 function LoginForm() {
     const navigate = useNavigate();
-    const { toast } = useToast();
 
-    const { handleLogin, error, isAuthenticated, authUser } = useAuth();
+    const { handleLogin, isAuthenticated } = useAuth();
 
     const form = useForm<z.infer<typeof LoginValidationSchema>>({
         resolver: zodResolver(LoginValidationSchema),
@@ -24,25 +23,15 @@ function LoginForm() {
         },
     })
 
-    async function onSubmit(values: z.infer<typeof LoginValidationSchema>) {
-
-        await handleLogin(values);
-
+    useEffect(() => {
         if (isAuthenticated) {
+            console.log(isAuthenticated);
             navigate('/');
-            toast({
-                title: 'Login successful',
-                description: `Welcome back, ${authUser?.userName}!`,
-            });
         }
+    }, [isAuthenticated]);
 
-        if (error) {
-            toast({
-                title: 'Login unsuccessful',
-                description: `Something went wrong`,
-                variant: "destructive"
-            });
-        }
+    async function onSubmit(values: z.infer<typeof LoginValidationSchema>) {
+        await handleLogin(values);
     }
 
     return (

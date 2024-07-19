@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "../ui/button";
 import NavItem from './NavItem';
+import { useAuth } from '@/hooks/useAuth';
+
 
 interface NavItemType {
     href: string;
@@ -15,6 +17,7 @@ const navItems: NavItemType[] = [
 
 const Navbar: React.FC = () => {
     const location = useLocation();
+    const { handleLogout, isAuthenticated, authUser } = useAuth();
 
     return (
         <nav className="bg-white shadow-sm">
@@ -37,10 +40,24 @@ const Navbar: React.FC = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="hidden sm:ml-6 sm:flex sm:items-center">
-                        <Link to="/login">
-                            <Button variant="outline">Sign In</Button>
-                        </Link>
+                    <div className="hidden sm:ml-6 sm:flex sm:items-center gap-5">
+
+                        {!isAuthenticated && (
+                            <>
+                                <Link to="/login">
+                                    <Button variant="default">Sign In</Button>
+                                </Link>
+                            </>
+                        )}
+
+                        {isAuthenticated && (
+                            <>
+                                <div className=''>{authUser?.userName}</div>
+                                <Button variant="outline" onClick={() => { handleLogout(); }}>Sign out</Button>
+                            </>
+                        )}
+
+
                     </div>
                 </div>
             </div>

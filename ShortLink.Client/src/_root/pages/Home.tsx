@@ -5,6 +5,7 @@ import { API_BASE_URL } from '@/config/config';
 import { UrlShortenerForm } from '@/components/UrlShortenerForm';
 import { UrlList } from '@/components/UrlList';
 import { useToast } from '@/components/ui/use-toast';
+import { Loader2 } from "lucide-react"
 
 const Home: React.FC = () => {
     const { urls, error, isLoading, shortenUrl, deleteUrl, fetchUrls } = useUrlShortener();
@@ -37,7 +38,7 @@ const Home: React.FC = () => {
 
             {isLoading && (
                 <>
-                    LOADING...
+                    <Loader2 className="h-8 w-8 animate-spin mx-auto mt-10" />
                 </>
             )}
 

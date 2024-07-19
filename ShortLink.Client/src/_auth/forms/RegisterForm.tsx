@@ -8,14 +8,13 @@ import { RegisterValidationSchema } from "@/lib/validation"
 import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/hooks/useAuth"
+import { useEffect } from "react"
 
 function RegisterForm() {
     const navigate = useNavigate();
     const { toast } = useToast();
 
     const { handleRegister, error, isAuthenticated, authUser } = useAuth();
-
-    //const { register, isLoading, error, clearError, checkAuthUser } = useAuthContext();
 
     const form = useForm<z.infer<typeof RegisterValidationSchema>>({
         resolver: zodResolver(RegisterValidationSchema),
@@ -26,25 +25,15 @@ function RegisterForm() {
         },
     })
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/');
+        }
+    }, [isAuthenticated]);
+
     async function onSubmit(values: z.infer<typeof RegisterValidationSchema>) {
 
         await handleRegister(values);
-
-        if (isAuthenticated) {
-            navigate('/');
-            toast({
-                title: 'Login successful',
-                description: `Welcome, ${authUser?.userName}!`,
-            });
-        }
-
-        if (error) {
-            toast({
-                title: 'Register unsuccessful',
-                description: `Something went wrong`,
-                variant: "destructive"
-            });
-        }
     }
 
     return (
