@@ -3,14 +3,14 @@ import apiClient from '@/api/apiClient';
 import { API_ENDPOINTS } from '@/config/config';
 
 
-interface ShortenedUrl {
+export interface ShortenedUrl {
     id: string;
     userId: string;
     originalUrl: string;
     shortUrlCode: string;
 }
 
-interface UseUrlShortenerReturn {
+export interface UseUrlShortenerReturn {
     urls: ShortenedUrl[];
     isLoading: boolean;
     error: string | null;

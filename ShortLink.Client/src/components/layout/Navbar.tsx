@@ -18,7 +18,7 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="bg-white shadow-sm">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl xl:max-w-5xl mx-auto px-4">
                 <div className="flex justify-between h-16 items-center">
                     <div className="flex">
                         <div className="flex-shrink-0 flex items-center">
@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
                                 <span className="text-xl font-bold text-gray-800">ShortLink</span>
                             </Link>
                         </div>
-                        <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <div className="hidden sm:ml-6 sm:flex ">
                             {navItems.map((item) => (
                                 <NavItem
                                     key={item.href}

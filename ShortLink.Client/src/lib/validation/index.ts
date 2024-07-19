@@ -19,3 +19,9 @@ export const LoginValidationSchema = z.object({
     email: z.string().email({ message: "Email must be valid" }),
     password: z.string(),
 });
+
+export const UrlValidationSchema = z.object({
+    url: z.string()
+        .min(1, { message: "URL is required" })
+        .url("Invalid URL format")
+});
