@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 
-interface NavItemProps {
+export interface NavItemProps {
     href: string;
     label: string;
     isActive: boolean;

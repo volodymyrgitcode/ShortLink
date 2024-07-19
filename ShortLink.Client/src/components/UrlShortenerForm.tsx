@@ -29,9 +29,10 @@ export const UrlShortenerForm: React.FC<UrlShortenerFormProps> = ({ onSubmit }) 
     const handleSubmit = async (values: UrlFormValues) => {
         if (!authUser) {
             navigate('/login');
+        } else {
+            await onSubmit(values.url);
+            form.reset();
         }
-        await onSubmit(values.url);
-        form.reset();
     };
 
     return (

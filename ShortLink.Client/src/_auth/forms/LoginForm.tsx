@@ -28,7 +28,7 @@ function LoginForm() {
             console.log(isAuthenticated);
             navigate('/');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]);
 
     async function onSubmit(values: z.infer<typeof LoginValidationSchema>) {
         await handleLogin(values);

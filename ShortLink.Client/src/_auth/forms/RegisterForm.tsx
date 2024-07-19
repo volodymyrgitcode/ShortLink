@@ -6,15 +6,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from 
 import { Input } from "@/components/ui/input"
 import { RegisterValidationSchema } from "@/lib/validation"
 import { Link, useNavigate } from "react-router-dom"
-import { useToast } from "@/components/ui/use-toast"
 import { useAuth } from "@/hooks/useAuth"
 import { useEffect } from "react"
 
 function RegisterForm() {
     const navigate = useNavigate();
-    const { toast } = useToast();
 
-    const { handleRegister, error, isAuthenticated, authUser } = useAuth();
+    const { handleRegister, isAuthenticated } = useAuth();
 
     const form = useForm<z.infer<typeof RegisterValidationSchema>>({
         resolver: zodResolver(RegisterValidationSchema),
@@ -29,7 +27,7 @@ function RegisterForm() {
         if (isAuthenticated) {
             navigate('/');
         }
-    }, [isAuthenticated]);
+    }, [[isAuthenticated, navigate]]);
 
     async function onSubmit(values: z.infer<typeof RegisterValidationSchema>) {
 
